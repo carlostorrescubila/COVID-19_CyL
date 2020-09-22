@@ -89,13 +89,6 @@ Descripcion_de_Datos <-
 
 ##### Mapa ################################################################################################
 
-mypal <-
-  colorNumeric(
-    palette = "Reds",
-    domain = Situacion_epidemiologica$casos_confirmados,
-    n = 5
-  )
-
 Map_CyL <- 
   # getData("GADM", country = "ES", level = 2) %>% 
   readRDS("Data/gadm36_ESP_2_sp.rds") %>% 

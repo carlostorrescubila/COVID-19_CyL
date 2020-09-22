@@ -65,7 +65,7 @@ shinyServer(function(input, output, session) {
         from = "Repositorio en GitHub",
         message = "Documentación, código, citas",
         icon = icon_github,
-        href = "https://github.com/carlostorrescubila"
+        href = "https://github.com/carlostorrescubila/COVID-19_CyL"
       ),
       messageItem(
         from = "Ultima actualización:",
@@ -76,7 +76,7 @@ shinyServer(function(input, output, session) {
         from = "Problemas",
         message = "Reportar problemas",
         icon = icon("database"),
-        href = "https://github.com/carlostorrescubila"
+        href = "https://github.com/carlostorrescubila/COVID-19_CyL/issues"
       )
     )
   })
@@ -228,33 +228,171 @@ shinyServer(function(input, output, session) {
 
   ##### >> Mapa ######################################################################################
   
-  output$Mapa <- renderLeaflet({
-    
-    Situacion_epidemiologica %>%
-      leaflet() %>% 
-      addTiles() %>%
-      addPolygons(
-        data = Map_CyL,
-        color = "black",
-        weight = 0.5,
-        fillColor = ~mypal(Situacion_epidemiologica$casos_confirmados),
-        fillOpacity = 0.3
-        ) #%>% 
-      # addLegend(
-      #   position = "bottomright", 
-      #   title = "Número de casos </br> <center>de COVID19</center>",
-      #   opacity = 1,
-      #   values = Situacion_epidemiologica$casos_confirmados#,
-        # pal = mypal#, 
-        # labels = qpal_labs, 
-      # )
+  observe({
 
-      # addMarkers(lng = ~Longitude,
-      #            lat = ~Latitude,
-      #            popup = paste("Offense", df$Offense, "<br>",
-      #                          "Year:", df$CompStat.Year)
-      # )
+    if (input$map_data == "Hospitales") {
+      updateSelectInput(
+        session,
+        'map_variable',
+        label = NULL,
+        choices = c(
+          "Hospitalizados por planta" = "hospitalizados_planta",
+          "Hospitalizados UCI" = "hospitalizados_uci",
+          "Altas" = "altas",
+          "Fallecimientos" = "fallecimientos"
+        )
+      )
+    }
+
+    if (input$map_data == "Provincias") {
+      updateSelectInput(
+        session,
+        'map_variable',
+        label = NULL,
+        choices = c(
+          "Casos confirmados" = "casos_confirmados",
+          # "Nuevos positivos" = "nuevos_positivos",
+          "Altas" = "altas",
+          "Fallecimientos" = "fallecimientos"
+        )
+      )
+    }
+
   })
+
+  # output$Mapa <- renderLeaflet({
+  #   leaflet('map') %>%
+  #     addTiles() %>% 
+  #     addPolygons(data = Map_CyL, fillOpacity = 0, weight = 2, color = "black")
+  # })
+  
+  # observeEvent(input$map_variable, { # update the map markers and view on location selectInput changes
+  #   
+  #   proxy <- leafletProxy("Mapa")
+  #   
+  #   if (input$map_data == "Hospitales") {
+  #     # Hospitales %>% 
+  #     #   dplyr::filter(fecha == fecha %>% unique() %>% last()) %>%
+  #     #   leaflet() %>%
+  #     #   addTiles() %>%
+  #     #   addCircles(
+  #     #     lng = ~posicion[1], lat = ~posicion[2], weight = 1,
+  #     #     radius = ~sqrt(input$map_variable) * 30#, popup = ~City
+  #     #   )
+  #   }
+  #   
+  #   if (input$map_data == "Provincias") {
+  #     
+  #     Situacion_epidemiologica_actual <- 
+  #       Situacion_epidemiologica %>%
+  #       filter(fecha == fecha %>% unique() %>% last())
+  # 
+  #     bins <- Situacion_epidemiologica %>%
+  #       dplyr::select(c(input$map_variable)) %>%
+  #       unlist(use.names = FALSE) %>%
+  #       quantile()
+  # 
+  #     pal <- colorBin(
+  #       "YlOrRd", 
+  #       domain = unlist(Situacion_epidemiologica[, input$map_variable]),
+  #       bins = bins)
+  #     
+  #     proxy %>%
+  #       clearShapes() %>% 
+  #       addPolygons(
+  #         data = Map_CyL,
+  #         color = "black",
+  #         weight = 0.5,
+  #         fillColor = ~mypal(Situacion_epidemiologica_actual[, input$map_variable] %>% unlist),
+  #         fillOpacity = 0.3
+  #         )
+  #     
+  #   }
+  #   
+  # })
+  
+  output$Mapa <- renderLeaflet({
+
+    if (input$map_data == "Hospitales") {
+
+      Hospitales %>%
+        dplyr::filter(fecha == fecha %>% unique() %>% last()) %>%
+        leaflet() %>%
+        addTiles() %>%
+        addCircles(
+          lng = ~posicion[1], lat = ~posicion[2], weight = 1,
+          radius = ~sqrt(input$map_variable) * 30#, popup = ~City
+        )
+
+    }
+
+    if (input$map_data == "Provincias") {
+
+        Situacion_epidemiologica_actual <-
+        Situacion_epidemiologica %>%
+        filter(fecha == fecha %>% unique() %>% last())
+        
+        map_provincias_legend <- Situacion_epidemiologica_actual$provincia %>% 
+          purrr::map(
+            .f = function(x){
+              HTML(paste0(
+                strong(x),
+                br(),
+                input$map_variable %>% str_replace("_", " ") %>% str_to_title,
+                ": ",
+                Situacion_epidemiologica_actual %>% filter(provincia == x) %>% dplyr::select(input$map_variable) %>% as.character()
+              ))
+            }
+          )
+
+        if(input$map_variable == "casos_confirmados"){
+          mypal <- colorNumeric(
+            palette = "YlOrRd",
+            domain = unlist(Situacion_epidemiologica$casos_confirmados)
+          )
+        }
+        if(input$map_variable == "altas"){
+          mypal <- colorNumeric(
+            palette = "BuPu", #"GnBu",
+            domain = unlist(Situacion_epidemiologica$altas) %>% na.omit()
+          )
+        }
+        if(input$map_variable == "fallecimientos"){
+          mypal <- colorNumeric(
+            palette = "Reds", #"BuPu",
+            domain = unlist(Situacion_epidemiologica$fallecimientos) %>% na.omit()
+          )
+        }
+
+        leaflet(Map_CyL) %>%
+          addTiles() %>%
+          addPolygons(
+            data = Map_CyL,
+            color = "black",
+            weight = 1,
+            fillColor = ~mypal(Situacion_epidemiologica_actual[, input$map_variable] %>% unlist),
+            fillOpacity = 0.3, label = map_provincias_legend
+          ) %>% 
+          addLegend(
+            pal = mypal, 
+            values = ~Situacion_epidemiologica_actual[, input$map_variable] %>% unlist, 
+            opacity = 0.7, 
+            title = input$map_variable %>% 
+              str_replace("_", " ") %>%
+              str_to_title,
+            position = "bottomright"
+            )
+        
+    }
+
+  })
+  
+  output$text_map <- renderText(
+    Situacion_epidemiologica %>%
+      dplyr::select(c(input$map_variable)) %>%
+      unlist(use.names = FALSE) %>%
+      quantile(na.rm = TRUE)
+  )
 
   ##### >> Análisis ##################################################################################
 

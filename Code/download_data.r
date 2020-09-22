@@ -12,13 +12,6 @@ download.file(
   destfile='Data/situacion-de-hospitalizados-por-coronavirus-en-castilla-y-leon.csv'
 )
 
-#### Situación profesionales sanitarios por coronavirus ####################################################
-
-download.file(
-  url='https://datosabiertos.jcyl.es/web/jcyl/risp/es/salud/profesionales-sanitarios-coronavirus/1284945647327.csv',
-  destfile='Data/situacion-profesionales-sanitarios-por-coronavirus.csv'
-)
-
 ##### Situación epidemiologica coronavirus en Castilla y Leon ##############################################
 
 download.file(

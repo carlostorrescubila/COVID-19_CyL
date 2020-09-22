@@ -10,7 +10,7 @@ source("./Code/read_data.r", encoding = "UTF-8")
 
 ##### >> Header ############################################################################
 
-header <- dashboardHeaderPlus(
+header <- dashboardHeader(
   title = tagList(
     tags$span(class = "logo-mini", ""),
     tags$span(class = "logo-lg", "Covid-19 en Castilla y León")
@@ -83,50 +83,73 @@ body <- dashboardBody(
     
     tabItem(
       tabName = "data",
-      h1("Datos disponibles para visualizar", class = "text-center"),
-      tags$p(
-        "Los conjuntos de datos disponibles han sido obtenidos del ",
-        tags$a(
-          href="https://datosabiertos.jcyl.es/web/es/catalogo-datos.html",
-          "Portal de Datos Abiertos de la Junta de Castilla y León", 
-          style = "color:red"
+      fluidPage(
+        h1("Datos disponibles para visualizar", class = "text-center"),
+        tags$p(
+          "Los conjuntos de datos disponibles han sido obtenidos del ",
+          tags$a(
+            href="https://datosabiertos.jcyl.es/web/es/catalogo-datos.html",
+            "Portal de Datos Abiertos de la Junta de Castilla y León", 
+            style = "color:red"
+            ),
+          ". Estos datos brindan información acerca de la situación de enfermos por coronavirus
+          detectados en atención primaria, la situación epidemiológica en Castilla y León por
+          hospitales, la situación de profesionales sanitarios afectados por coronavirus y
+          la situación epidemiológica en Castilla y León por provincias.",
+          style = "text-align: justify"
           ),
-        ". Estos datos brindan información acerca de la situación de enfermos por coronavirus
-        detectados en atención primaria, la situación epidemiológica en Castilla y León por
-        hospitales, la situación de profesionales sanitarios afectados por coronavirus y
-        la situación epidemiológica en Castilla y León por provincias.",
-        style = "text-align: justify"
-        ),
-      br(),
-      fluidRow(
-        column(6, 
-               selectInput(
-                inputId = "select_data_base",
-                label = "Seleccione base de datos:",
-                choices = names(Bases_de_Datos)
-                )
-               ), 
-        column(6, 
-               p(
-                 class = 'text-right', 
-                 br(), 
-                 downloadButton("Download_data", "Descargar")
+        br(),
+        fluidRow(
+          column(6, 
+                 selectInput(
+                  inputId = "select_data_base",
+                  label = "Seleccione base de datos:",
+                  choices = names(Bases_de_Datos)
+                  )
+                 ), 
+          column(6, 
+                 p(
+                   class = 'text-right', 
+                   br(), 
+                   downloadButton("Download_data", "Descargar")
+                   )
                  )
-               )
-      ),
-      h3("Descripción:"), 
-      htmlOutput("Descripcion_datos"),
-      br(), 
-      dataTableOutput("Datos")
+        ),
+        h3("Descripción:"), 
+        htmlOutput("Descripcion_datos"),
+        br(), 
+        dataTableOutput("Datos")
+      )
     ),
     
     ##### >>> Mapa #############################################################################
     
     tabItem(
       tabName = "map",
-      h2("Mapa de calor"),
-      leafletOutput("Mapa")
-    ),
+      fillPage(
+        tags$style(type = "text/css", "#Mapa {height: calc(100vh - 80px) !important;}"), 
+        leafletOutput("Mapa"),
+        absolutePanel(
+          id = "controls", class = "panel panel-default", fixed = TRUE,
+          draggable = TRUE, top = 70, left = "auto", right = 30, bottom = "auto",
+          width = 330, height = "auto",
+          fluidPage(
+            h3("Seleccione información", class = "text-center"), 
+            selectInput(
+              inputId = "map_data", 
+              label = "Visualizar por:", 
+              choices = c("Hospitales", "Provincias"), 
+              selected = "Provincias"
+              ),
+            selectInput(
+              inputId = "map_variable",
+              label = "Visualizar:",
+              choices = NULL
+              )
+            )
+          )
+        )
+      ),
     
     ##### >>> Análisis #########################################################################
     
@@ -135,7 +158,7 @@ body <- dashboardBody(
     tabItem(
       tabName = "analysis_atención_primaria", 
       h2(
-        "Situación de enfermos detectados en atención primaria en Castilla y León", 
+        "Cantidad de enfermos detectados en atención primaria en Castilla y León", 
         class = "text-center"
       ),
       br(), br(),
