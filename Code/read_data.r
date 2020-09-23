@@ -93,3 +93,38 @@ Map_CyL <-
   # getData("GADM", country = "ES", level = 2) %>% 
   readRDS("Data/gadm36_ESP_2_sp.rds") %>% 
   subset(NAME_1 == "Castilla y León")
+
+latitudes_corregidas <- c(
+  "Complejo Asistencial de Ávila", 
+  "Complejo Asistencial de Segovia",        
+  "Complejo Asistencial de Soria", 
+  "Complejo Asistencial de Zamora", 
+  "Complejo Asistencial Universitario de Burgos",
+  "Complejo Asistencial Universitario de León",
+  "Complejo Asistencial Universitario de Palencia",
+  "Complejo Asistencial Universitario de Salamanca",
+  "Hospital Clínico Universitario de Valladolid",
+  "Hospital de Medina del Campo",
+  "Hospital El Bierzo",
+  "Hospital Santiago Apóstol",
+  "Hospital Santos Reyes",
+  "Hospital Universitario Río Hortega" 
+  )
+
+longitudes_corregidas <- c(
+  "Complejo Asistencial de Ávila", 
+  "Complejo Asistencial de Segovia",        
+  "Complejo Asistencial de Soria", 
+  "Complejo Asistencial de Zamora", 
+  "Complejo Asistencial Universitario de Burgos",
+  "Complejo Asistencial Universitario de León",
+  "Complejo Asistencial Universitario de Palencia",
+  "Complejo Asistencial Universitario de Salamanca",
+  "Hospital Clínico Universitario de Valladolid",
+  "Hospital de Medina del Campo",
+  "Hospital El Bierzo",
+  "Hospital Santiago Apóstol",
+  "Hospital Santos Reyes",
+  "Hospital Universitario Río Hortega" 
+  
+)

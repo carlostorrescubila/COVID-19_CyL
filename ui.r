@@ -126,25 +126,58 @@ body <- dashboardBody(
     
     tabItem(
       tabName = "map",
-      fillPage(
-        tags$style(type = "text/css", "#Mapa {height: calc(100vh - 80px) !important;}"), 
-        leafletOutput("Mapa"),
+      fluidPage(
+        
+        tags$style(
+          type = "text/css", 
+          "#map_hospitales {height: calc(100vh - 80px) !important;}
+          #map_provincias {height: calc(100vh - 80px) !important;}"
+          ),
+
+        conditionalPanel(
+          condition = "input.tabs=='Hospitales'",
+          leafletOutput("map_hospitales", width="100%", height = "100%")
+        ),
+        
+        conditionalPanel(
+          condition = "input.tabs=='Provincias'",
+          leafletOutput("map_provincias", width="100%", height = "100%")
+        ),
+        
         absolutePanel(
-          id = "controls", class = "panel panel-default", fixed = TRUE,
-          draggable = TRUE, top = 70, left = "auto", right = 30, bottom = "auto",
+          fixed = TRUE,
+          draggable = TRUE, 
+          top = 70, left = "auto", right = 30, bottom = "auto",
           width = 330, height = "auto",
-          fluidPage(
-            h3("Seleccione información", class = "text-center"), 
-            selectInput(
-              inputId = "map_data", 
-              label = "Visualizar por:", 
-              choices = c("Hospitales", "Provincias"), 
-              selected = "Provincias"
+          id = "tabPanel",
+          class = "panel panel-default",
+          style = "padding : 10px",
+          tabsetPanel(
+            id = "tabs", 
+            tabPanel(
+              "Hospitales",
+              selectInput(
+                inputId = "map_variable_hospital", 
+                label = "Visualizar:",
+                c(
+                  "Hospitalizados por planta" = "hospitalizados_planta",
+                 "Hospitalizados UCI" = "hospitalizados_uci",
+                 "Altas" = "altas",
+                 "Fallecimientos" = "fallecimientos"
+                 )
+                )
               ),
-            selectInput(
-              inputId = "map_variable",
-              label = "Visualizar:",
-              choices = NULL
+            tabPanel(
+              "Provincias",
+              selectInput(
+                inputId = "map_variable_provincias", 
+                label = "Visualizar:",
+                c(
+                  "Casos confirmados" = "casos_confirmados",
+                  "Altas" = "altas",
+                  "Fallecimientos" = "fallecimientos"
+                 )
+                )
               )
             )
           )
