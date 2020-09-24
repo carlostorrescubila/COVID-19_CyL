@@ -43,7 +43,7 @@ shinyServer(function(input, output, session) {
     )
   )
 
-  shinyjs::addClass(selector = "header", class = "absolute")
+  # shinyjs::addClass(selector = "header", class = "absolute")
   
   onevent(
     event = "mouseenter", 
@@ -86,6 +86,17 @@ shinyServer(function(input, output, session) {
     )
     
   })
+  
+  # onevent(
+  #   event = "mouseenter", 
+  #   id = "rendermenuCollapsed", 
+  #   expr = shinyjs::show("messageMenu")#shinyjs::removeCssClass(id = "messageMenu", class = "collapse")
+  # )
+  # onevent(
+  #   event = "mouseleave", 
+  #   id = "rendermenuCollapsed", 
+  #   expr = shinyjs::hide(id = "messageMenu")#shinyjs::addCssClass(id = "messageMenu", class = "collapse")
+  # )
  
   ##### >> Actualidad ###############################################################################
   
@@ -246,9 +257,12 @@ shinyServer(function(input, output, session) {
     
   })
   
-  output$Datos = renderDataTable({
-    Bases_de_Datos[[as.character(input$select_data_base)]]
-  })
+  output$Datos = renderDataTable(
+    Bases_de_Datos[[as.character(input$select_data_base)]], 
+    filter = 'top', 
+    options = list(scrollX = 500, deferRender = TRUE, scroller = TRUE, fixedColumns = TRUE), 
+    rownames = FALSE
+  )
 
   output$Download_data <- downloadHandler(
       filename = function() {Nombres_de_Datos[[as.character(input$select_data_base)]]},
@@ -351,19 +365,19 @@ shinyServer(function(input, output, session) {
     if(input$map_variable_provincias == "casos_confirmados"){
       mypal <- colorNumeric(
         palette = "YlOrRd",
-        domain = unlist(Situacion_epidemiologica$casos_confirmados)
+        domain = unlist(Situacion_epidemiologica_actual$casos_confirmados)
       )
     }
     if(input$map_variable_provincias == "altas"){
       mypal <- colorNumeric(
         palette = "Greens",
-        domain = unlist(Situacion_epidemiologica$altas) %>% na.omit()
+        domain = unlist(Situacion_epidemiologica_actual$altas) %>% na.omit()
       )
     }
     if(input$map_variable_provincias == "fallecimientos"){
       mypal <- colorNumeric(
         palette = "Reds",
-        domain = unlist(Situacion_epidemiologica$fallecimientos) %>% na.omit()
+        domain = unlist(Situacion_epidemiologica_actual$fallecimientos) %>% na.omit()
       )
     }
     
