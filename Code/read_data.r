@@ -94,37 +94,36 @@ Map_CyL <-
   readRDS("Data/gadm36_ESP_2_sp.rds") %>% 
   subset(NAME_1 == "Castilla y León")
 
-latitudes_corregidas <- c(
-  "Complejo Asistencial de Ávila", 
-  "Complejo Asistencial de Segovia",        
-  "Complejo Asistencial de Soria", 
-  "Complejo Asistencial de Zamora", 
-  "Complejo Asistencial Universitario de Burgos",
-  "Complejo Asistencial Universitario de León",
-  "Complejo Asistencial Universitario de Palencia",
-  "Complejo Asistencial Universitario de Salamanca",
-  "Hospital Clínico Universitario de Valladolid",
-  "Hospital de Medina del Campo",
-  "Hospital El Bierzo",
-  "Hospital Santiago Apóstol",
-  "Hospital Santos Reyes",
-  "Hospital Universitario Río Hortega" 
+latitudes_hospitales <- c(
+  "Complejo Asistencial de Ávila" = 40.665950, 
+  "Complejo Asistencial de Segovia" = 40.942685,        
+  "Complejo Asistencial de Soria" = 41.772020, 
+  "Complejo Asistencial de Zamora" = 41.514459, 
+  "Complejo Asistencial Universitario de Burgos" = 42.361854,
+  "Complejo Asistencial Universitario de León" = 42.619435,
+  "Complejo Asistencial Universitario de Palencia" = 41.996713,
+  "Complejo Asistencial Universitario de Salamanca" = 40.964091,
+  "Hospital Clínico Universitario de Valladolid" = 41.655687,
+  "Hospital de Medina del Campo" = 41.295328,
+  "Hospital El Bierzo" = 42.572222,
+  "Hospital Santiago Apóstol" = 42.669824,
+  "Hospital Santos Reyes" = 41.669570,
+  "Hospital Universitario Río Hortega" = 41.629669 
   )
 
-longitudes_corregidas <- c(
-  "Complejo Asistencial de Ávila", 
-  "Complejo Asistencial de Segovia",        
-  "Complejo Asistencial de Soria", 
-  "Complejo Asistencial de Zamora", 
-  "Complejo Asistencial Universitario de Burgos",
-  "Complejo Asistencial Universitario de León",
-  "Complejo Asistencial Universitario de Palencia",
-  "Complejo Asistencial Universitario de Salamanca",
-  "Hospital Clínico Universitario de Valladolid",
-  "Hospital de Medina del Campo",
-  "Hospital El Bierzo",
-  "Hospital Santiago Apóstol",
-  "Hospital Santos Reyes",
-  "Hospital Universitario Río Hortega" 
-  
+longitudes_hospitales <- c(
+  "Complejo Asistencial de Ávila" = -4.667236, 
+  "Complejo Asistencial de Segovia" =  -4.128632,        
+  "Complejo Asistencial de Soria" = -2.471435, 
+  "Complejo Asistencial de Zamora" = -5.731352, 
+  "Complejo Asistencial Universitario de Burgos" = -3.685055,
+  "Complejo Asistencial Universitario de León" = -5.573359,
+  "Complejo Asistencial Universitario de Palencia" = -4.519746,
+  "Complejo Asistencial Universitario de Salamanca" = -5.673282,
+  "Hospital Clínico Universitario de Valladolid" = -4.719677,
+  "Hospital de Medina del Campo" = -4.911416,
+  "Hospital El Bierzo" = -6.643453,
+  "Hospital Santiago Apóstol" = -2.988819,
+  "Hospital Santos Reyes" = -3.691566,
+  "Hospital Universitario Río Hortega" = -4.713756
 )

@@ -57,7 +57,9 @@ shinyServer(function(input, output, session) {
   
   icon_github <- icon("github")
   icon_github[["attribs"]][["class"]] <- "fa fa-github"
+  
   output$messageMenu <- renderMenu({
+    
     dropdownMenu(
       icon = icon("info-circle"), 
       headerText = strong("Información de la aplicación:"),
@@ -79,11 +81,13 @@ shinyServer(function(input, output, session) {
         href = "https://github.com/carlostorrescubila/COVID-19_CyL/issues"
       )
     )
+    
   })
  
   ##### >> Actualidad ###############################################################################
   
   output$actualidad_casos_confirmados <- renderValueBox({
+    
     valueBox(
       subtitle = actionButton(
         inputId = "actualidad_casos_confirmados_button",
@@ -95,9 +99,11 @@ shinyServer(function(input, output, session) {
       icon = icon("viruses"), 
       color = "red"
     )
+    
   })
   
   output$actualidad_nuevos_positivos <- renderValueBox({
+    
     shinydashboard::valueBox(
       subtitle = actionButton(
           inputId = "actualidad_nuevos_positivos_button",
@@ -109,9 +115,11 @@ shinyServer(function(input, output, session) {
       icon = icon("virus"), 
       color = "orange"
     )
+    
   })
   
   output$actualidad_altas <- renderValueBox({
+    
     shinydashboard::valueBox(
       subtitle = actionButton(
         inputId = "actualidad_altas_button",
@@ -123,9 +131,11 @@ shinyServer(function(input, output, session) {
       icon = icon("plus-square"), 
       color = "green"
       )
+    
   })
   
   output$actualidad_fallecimientos <- renderValueBox({
+    
     shinydashboard::valueBox(
       subtitle = actionButton(
         inputId = "actualidad_fallecimientos_button",
@@ -137,6 +147,7 @@ shinyServer(function(input, output, session) {
       icon = icon("cross"), 
       color = "purple"
       )
+    
   })
   
   rv <- reactiveValues(actualidad_variable = "casos_confirmados", actualidad_color = "red2")
@@ -186,6 +197,7 @@ shinyServer(function(input, output, session) {
             str_to_title
         )
       )
+    
   })
 
   ##### >> Bases de datos#############################################################################
@@ -233,8 +245,10 @@ shinyServer(function(input, output, session) {
     Hospitales_actual <- Hospitales %>%
       filter(fecha == fecha %>% unique() %>% last()) %>%
       dplyr::mutate(
-        latitud = str_split_fixed(.$posicion, ",", 2) %>% .[,1] %>% as.numeric(),
-        longitud = str_split_fixed(.$posicion, ",", 2) %>% .[,2] %>% as.numeric()
+        latitud  = latitudes_hospitales[sort(levels(Hospitales_actual$hospital))],
+        longitud = longitudes_hospitales[sort(levels(Hospitales_actual$hospital))]
+        # latitud = str_split_fixed(.$posicion, ",", 2) %>% .[,1] %>% as.numeric(),
+        # longitud = str_split_fixed(.$posicion, ",", 2) %>% .[,2] %>% as.numeric()
       )
     
     Hospitales_actual_variable <- Hospitales_actual[, input$map_variable_hospital] %>% 
@@ -280,7 +294,8 @@ shinyServer(function(input, output, session) {
         radius = ~Hospitales_actual_variable/max(Hospitales_actual_variable)*100,
         label = map_hospital_legend, 
         fillOpacity = 0.5, 
-        color = color_circles,
+        color= NA,
+        # color = color_circles,
         fillColor = color_circles
       )
     
