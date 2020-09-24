@@ -67,22 +67,28 @@ Descripcion_de_Datos <-
       "descripcion" = "Datos de número de pacientes por provincia, sexo y tramo de edad en Castilla y León.", 
       "actualizacion" = "de lunes a viernes.",
       "fecha" = "3 de abril de 2020.", 
-      "nota" = "El dato de pacientes enfermos incluye todos los diagnósticos compatibles con coronavirus (neumonía por COVID-19 y enfermedad por COVID-19)."
+      "ultima_fecha" = Atencion_primaria$fecha %>% unique() %>% last() %>% format('%d de %B de %Y.'),
+      "nota" = "El dato de pacientes enfermos incluye todos los diagnósticos compatibles con coronavirus (neumonía por COVID-19 y enfermedad por COVID-19).", 
+      "link" = "https://datosabiertos.jcyl.es/web/jcyl/set/es/salud/situacion-coronavirus-atencion-primaria/1284942898818"
     ),
     "Hospitales" = list(
       "descripcion" = "Evolución del número de hospitalizados en planta, hospitalizados en unidades de críticos, altas y fallecimientos por hospital debidos al coronavirus (COVID-19) en Castilla y León.", 
       "actualizacion" = "diaria.",
       "fecha" = "18 de marzo de 2020.", 
-      "nota" = "En los hospitales Santiago Apóstol, Santos Reyes y de Medina del Campo el valor de ingresados en UCI es 0 porque no disponen esta unidad."
+      "ultima_fecha" = Hospitales$fecha %>% unique() %>% last() %>% format('%d de %B de %Y.'),
+      "nota" = "En los hospitales Santiago Apóstol, Santos Reyes y de Medina del Campo el valor de ingresados en UCI es 0 porque no disponen esta unidad.", 
+      "link" = "https://datosabiertos.jcyl.es/web/jcyl/set/es/salud/situacion-coronavirus-hospitales/1284941728695"
     ),
     "Situacion epidemiologica" = list(
       "descripcion" = "Datos diarios de confirmados, nuevos casos, altas y fallecimientos en hospitales debidos al coronavirus (COVID-19) por provincias en Castilla y León.", 
       "actualizacion" = "de lunes a viernes.",
       "fecha" = "13 de marzo de 2020.", 
+      "ultima_fecha" = Situacion_epidemiologica$fecha %>% unique() %>% last() %>% format('%d de %B de %Y.'),
       "nota" = '
         Desde el 18 de mayo, los nuevos casos confirmados solo reflejan resultados de PCR.
         Valores negativos en "Nuevos casos positivos" corresponden a pacientes cuyo resultado ha sido positivo inicialmente y en la prueba de confirmación se ha descartado.
-      '
+      ', 
+      "link" = "https://datosabiertos.jcyl.es/web/jcyl/set/es/salud/situacion-epidemiologica-coronavirus/1284940407131"
     )
   )
 

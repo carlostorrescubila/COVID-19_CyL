@@ -18,14 +18,17 @@ shinyServer(function(input, output, session) {
           "Esta aplicación ha sido creada para el IV Concurso de Datos Abiertos de Castilla y León 
           con el objetivo de brindar una herramienta que ayude a visualizar el progreso sanitario 
           de la crisis del coronavirus en Castilla y León.", 
-          style = "text-align: justify"
+          style = "text-align: justify; color:black"
           ),
         br(),
-        tags$img(src = "https://www.jcyl.es/futuretense_cs/JCYL_17/img/junta-de-castilla-y-leon.png")
+        tags$img(
+          src = "https://upload.wikimedia.org/wikipedia/commons/b/b8/Logotipo_de_la_Junta_de_Castilla_y_Le%C3%B3n.svg", 
+          style = "width: 200px; height:auto"
+          )
         ),
       size = "s", 
       closeOnEsc = FALSE,
-      closeOnClickOutside = FALSE,
+      closeOnClickOutside = FALSE, 
       html = T,
       type = "info",
       showConfirmButton = TRUE,
@@ -65,19 +68,19 @@ shinyServer(function(input, output, session) {
       headerText = strong("Información de la aplicación:"),
       messageItem(
         from = "Repositorio en GitHub",
-        message = "Documentación, código, citas",
+        message = "Documentación, código, referencias",
         icon = icon_github,
         href = "https://github.com/carlostorrescubila/COVID-19_CyL"
       ),
       messageItem(
         from = "Ultima actualización:",
-        message = Situacion_epidemiologica$fecha %>% unique() %>% last(),
+        message = Hospitales$fecha %>% unique() %>% last(),
         icon = icon("calendar-check")
       ),
       messageItem(
         from = "Problemas",
         message = "Reportar problemas",
-        icon = icon("database"),
+        icon = icon("exclamation-circle"),
         href = "https://github.com/carlostorrescubila/COVID-19_CyL/issues"
       )
     )
@@ -207,9 +210,11 @@ shinyServer(function(input, output, session) {
     paste(
       
       Descripcion_de_Datos[[as.character(input$select_data_base)]][["descripcion"]], 
+      
+      "<br>",
 
       "<li>",
-      strong("Inicio de la publicación: "), 
+      strong("Frecuencia de actualización: "), 
       Descripcion_de_Datos[[as.character(input$select_data_base)]][["actualizacion"]], 
       "</li>",
       
@@ -219,9 +224,23 @@ shinyServer(function(input, output, session) {
       "</li>",
       
       "<li>",
+      strong("Actualizado hasta el: "), 
+      Descripcion_de_Datos[[as.character(input$select_data_base)]][["ultima_fecha"]], 
+      "</li>",
+      
+      "<li>",
       strong("Nota: "), 
       Descripcion_de_Datos[[as.character(input$select_data_base)]][["nota"]],
-      "</li>"
+      "</li>", 
+      
+      "<br>",
+      
+      "Para información más detallada sobre este conjunto de datos visite: ", 
+      "<a href='", 
+      Descripcion_de_Datos[[as.character(input$select_data_base)]][["link"]], 
+      "', style = 'color:red'>",
+      Descripcion_de_Datos[[as.character(input$select_data_base)]][["link"]],
+      "</a>"
       
       )
     
@@ -245,8 +264,8 @@ shinyServer(function(input, output, session) {
     Hospitales_actual <- Hospitales %>%
       filter(fecha == fecha %>% unique() %>% last()) %>%
       dplyr::mutate(
-        latitud  = latitudes_hospitales[sort(levels(Hospitales_actual$hospital))],
-        longitud = longitudes_hospitales[sort(levels(Hospitales_actual$hospital))]
+        latitud  = latitudes_hospitales[sort(levels(Hospitales$hospital))],
+        longitud = longitudes_hospitales[sort(levels(Hospitales$hospital))]
         # latitud = str_split_fixed(.$posicion, ",", 2) %>% .[,1] %>% as.numeric(),
         # longitud = str_split_fixed(.$posicion, ",", 2) %>% .[,2] %>% as.numeric()
       )
@@ -261,7 +280,11 @@ shinyServer(function(input, output, session) {
             div(
               strong(x),
               br(),
-              input$map_variable_hospital %>% str_replace("_", " ") %>% str_to_title,
+              input$map_variable_hospital %>% 
+                str_to_title %>% 
+                str_replace("_", " ") %>% 
+                str_replace("planta", "por planta") %>%
+                str_replace("uci", "UCI"),
               ": ",
               Hospitales_actual %>%
                 filter(hospital == x) %>%
@@ -462,6 +485,8 @@ shinyServer(function(input, output, session) {
           title = input$analysis_hospitales_select_data %>%
             str_to_title %>%
             str_replace("_", " ") %>%
+            str_replace("planta", "por planta") %>% 
+            str_replace("uci", "UCI") %>% 
             as.character
         )
       )

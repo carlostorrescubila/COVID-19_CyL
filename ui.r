@@ -27,7 +27,7 @@ sidebar <- dashboardSidebar(
   collapsed = TRUE, 
   sidebarMenu(
     menuItem("Actualidad", tabName = "actualidad", icon = icon("calendar-day")), 
-    menuItem("Datos", tabName = "data", icon = icon("table")),
+    menuItem("Datos", tabName = "data", icon = icon("database")),
     menuItem("Mapa", tabName = "map", icon = icon("map-marked-alt")),
     menuItem(
       "Análisis", 
