@@ -18,14 +18,15 @@ Atencion_primaria <-
 
 ##### Situacion de hospitalizados por coronavirus en Castilla y Leon #######################################
 
-Hospitales<- 
-  read_delim(
-    # url("https://datosabiertos.jcyl.es/web/jcyl/risp/es/salud/situacion-coronavirus-hospitales/1284941728695.csv"), 
-    file = "Data/situacion-de-hospitalizados-por-coronavirus-en-castilla-y-leon.csv",
-    delim = ";", 
-    escape_double = FALSE, 
-    trim_ws = TRUE
-  ) %>% 
+Hospitales <-
+  httr::GET(
+    "https://analisis.datosabiertos.jcyl.es/api/records/1.0/search/?dataset=situacion-de-hospitalizados-por-coronavirus-en-castilla-y-leon&q=&rows=10000&sort=fecha&facet=fecha&facet=hospital&facet=provincia&facet=codigo_ine"
+  ) %>%
+  content("text") %>%
+  jsonlite::fromJSON() %>%
+  .$records %>%
+  .$fields %>% 
+  relocate(fecha, hospital, provincia, nuevos_hospitalizados_planta, hospitalizados_planta, hospitalizados_planta_incluidos_sospecha, nuevos_hospitalizados_uci, hospitalizados_uci, hospitalizados_uci_incluidos_sospecha, nuevas_altas, altas, nuevos_fallecimientos, fallecimientos, codigo_ine, posicion) %>% 
   mutate(
     fecha = as.Date(.$fecha),
     hospital = as.factor(.$hospital), 
@@ -36,13 +37,21 @@ Hospitales<-
 ##### Situación epidemiologica coronavirus en Castilla y Leon ##############################################
 
 Situacion_epidemiologica <- 
+# httr::GET(
+#   "https://analisis.datosabiertos.jcyl.es/api/records/1.0/search/?dataset=situacion-epidemiologica-coronavirus-en-castilla-y-leon&q=&rows=10000&sort=fecha&facet=fecha&facet=provincia"
+#   ) %>%
+#   content("text") %>%
+#   jsonlite::fromJSON() %>%
+#   .$records %>%
+#   .$fields %>%
+#   relocate(fecha, provincia, casos_confirmados, nuevos_positivos, altas, fallecimientos, codigo_ine, posicion) %>% 
   read_delim(
     # url("https://datosabiertos.jcyl.es/web/jcyl/risp/es/salud/situacion-epidemiologica-coronavirus/1284940407131.csv"),
-    file = "Data/situacion-epidemiologica-coronavirus-en-castilla-y-leon.csv", 
-    delim = ";", 
-    escape_double = FALSE, 
+    file = "Data/situacion-epidemiologica-coronavirus-en-castilla-y-leon.csv",
+    delim = ";",
+    escape_double = FALSE,
     trim_ws = TRUE
-    ) %>% 
+    ) %>%
   arrange(fecha, provincia)
 
 ##### Lista de bases de datos #############################################################################

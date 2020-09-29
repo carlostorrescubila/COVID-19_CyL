@@ -17,7 +17,12 @@ shinyServer(function(input, output, session) {
         tags$p(
           "Esta aplicación ha sido creada para el IV Concurso de Datos Abiertos de Castilla y León 
           con el objetivo de brindar una herramienta que ayude a visualizar el progreso sanitario 
-          de la crisis del coronavirus en Castilla y León.", 
+          de la crisis del coronavirus en Castilla y León. Para más información de esta aplicación vea ", 
+          tags$a(
+            href = "https://github.com/carlostorrescubila/COVID-19_CyL/blob/master/README.md", 
+            "esta documentación"
+            ),
+          ".",
           style = "text-align: justify; color:black"
           ),
         br(),
@@ -257,7 +262,7 @@ shinyServer(function(input, output, session) {
     
   })
   
-  output$Datos = renderDataTable(
+  output$Datos = DT::renderDataTable(
     Bases_de_Datos[[as.character(input$select_data_base)]], 
     filter = 'top', 
     options = list(scrollX = 500, deferRender = TRUE, scroller = TRUE, fixedColumns = TRUE), 
