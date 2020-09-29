@@ -11,4 +11,4 @@ La aplicación cuenta con cuatro funcionalidades básicas:
 * **Actualidad:** en esta seccioón se puede observar la cantidad contagios registrados desde el primer día, los contagios diarios, las altas y los fallecimientos para la comunidad Autónoma de Castilla y León. 
 * **Datos:** en esta sección se pueden observar y descargar los datos utilizados en la aplicación. También se da una explicación breve de cada conjunto de datos y su respectivo enlace en al Portal de Datos Abiertos de la Junta de Castilla y León.
 * **Mapa:** en esta sección se utiliza datos de areas y datos geoestadísticos para visualizar de forma rápida y sencilla la evolución epidemiológica del coronavirus (COVID-19) por hospitales o por provincias. 
-* **Análisis:** Esta sección cuenta con una subsección especial para cada conjunto de datos considerado. En cada subsección se puede visualizar los datos 
+* **Análisis:** Esta sección cuenta con una subsección especial para cada conjunto de datos considerado. En cada subsección se puede visualizar los datos filtrando y seleccionando variables para facilitar el entendimiento de la evolución del coronavirus (COVID-19). 
