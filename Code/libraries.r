@@ -1,6 +1,8 @@
 #### > Read data #### ##########################################################################
 
 library(readr)
+library(httr)
+library(jsonlite)
 
 #### > Data treatment ##########################################################################
 
@@ -29,6 +31,3 @@ library(shinydashboard)
 library(shinydashboardPlus)
 library(shinyjs)
 library(shinyalert)
-
-# library(httr)
-# library(jsonlite)

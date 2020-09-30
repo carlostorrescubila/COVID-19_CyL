@@ -26,33 +26,34 @@ Hospitales <-
   jsonlite::fromJSON() %>%
   .$records %>%
   .$fields %>% 
-  relocate(fecha, hospital, provincia, nuevos_hospitalizados_planta, hospitalizados_planta, hospitalizados_planta_incluidos_sospecha, nuevos_hospitalizados_uci, hospitalizados_uci, hospitalizados_uci_incluidos_sospecha, nuevas_altas, altas, nuevos_fallecimientos, fallecimientos, codigo_ine, posicion) %>% 
+  relocate(fecha, hospital, provincia, nuevos_hospitalizados_planta, 
+           hospitalizados_planta, hospitalizados_planta_incluidos_sospecha, nuevos_hospitalizados_uci, 
+           hospitalizados_uci, hospitalizados_uci_incluidos_sospecha, nuevas_altas, altas, 
+           nuevos_fallecimientos, fallecimientos, codigo_ine, posicion) %>% 
   mutate(
     fecha = as.Date(.$fecha),
     hospital = as.factor(.$hospital), 
-    provincia = as.factor(.$provincia),
+    provincia = as.factor(.$provincia)
   ) %>% 
-  arrange(fecha, hospital)
+  dplyr::arrange(fecha, hospital)
 
 ##### Situación epidemiologica coronavirus en Castilla y Leon ##############################################
 
 Situacion_epidemiologica <- 
-# httr::GET(
-#   "https://analisis.datosabiertos.jcyl.es/api/records/1.0/search/?dataset=situacion-epidemiologica-coronavirus-en-castilla-y-leon&q=&rows=10000&sort=fecha&facet=fecha&facet=provincia"
-#   ) %>%
-#   content("text") %>%
-#   jsonlite::fromJSON() %>%
-#   .$records %>%
-#   .$fields %>%
-#   relocate(fecha, provincia, casos_confirmados, nuevos_positivos, altas, fallecimientos, codigo_ine, posicion) %>% 
-  read_delim(
-    # url("https://datosabiertos.jcyl.es/web/jcyl/risp/es/salud/situacion-epidemiologica-coronavirus/1284940407131.csv"),
-    file = "Data/situacion-epidemiologica-coronavirus-en-castilla-y-leon.csv",
-    delim = ";",
-    escape_double = FALSE,
-    trim_ws = TRUE
-    ) %>%
-  arrange(fecha, provincia)
+httr::GET(
+  "https://analisis.datosabiertos.jcyl.es/api/records/1.0/search/?dataset=situacion-epidemiologica-coronavirus-en-castilla-y-leon&q=&rows=10000&sort=fecha&facet=fecha&facet=provincia"
+  ) %>%
+  content("text") %>%
+  jsonlite::fromJSON() %>%
+  .$records %>%
+  .$fields %>%
+  relocate(fecha, provincia, casos_confirmados, nuevos_positivos, altas, 
+           fallecimientos, codigo_ine, posicion) %>%
+  mutate(
+    fecha = as.Date(.$fecha),
+    provincia = as.factor(.$provincia)
+    ) %>% 
+  dplyr::arrange(fecha, provincia)
 
 ##### Lista de bases de datos #############################################################################
 
