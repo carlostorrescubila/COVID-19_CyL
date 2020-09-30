@@ -7,6 +7,7 @@ Atencion_primaria <-
     escape_double = FALSE, 
     trim_ws = TRUE
   ) %>% 
+  as.data.frame()%>% 
   mutate(
     fecha = as.Date(.$fecha),
     provincia = as.factor(.$provincia),

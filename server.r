@@ -261,18 +261,22 @@ shinyServer(function(input, output, session) {
       )
     
   })
-  
+
   output$Datos = DT::renderDataTable(
-    Bases_de_Datos[[as.character(input$select_data_base)]], 
-    filter = 'top', 
-    options = list(scrollX = 500, deferRender = TRUE, scroller = TRUE, fixedColumns = TRUE), 
+    Bases_de_Datos[[input$select_data_base]],
+    filter = 'top',
+    options = list(scrollX = 500, deferRender = TRUE, scroller = TRUE, fixedColumns = TRUE),
     rownames = FALSE
   )
 
   output$Download_data <- downloadHandler(
-      filename = function() {Nombres_de_Datos[[as.character(input$select_data_base)]]},
+      filename = function() {Nombres_de_Datos[[input$select_data_base]]},
       content = function(file){
-        write.csv(Bases_de_Datos[[as.character(input$select_data_base)]], file, row.names = FALSE)
+        write.csv(
+          Bases_de_Datos[[input$select_data_base]],
+          file,
+          row.names = FALSE
+          )
       }
     )
 
