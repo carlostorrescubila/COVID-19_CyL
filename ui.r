@@ -101,22 +101,11 @@ body <- dashboardBody(
           style = "text-align: justify"
           ),
         br(),
-        fluidRow(
-          column(6, 
-                 selectInput(
-                  inputId = "select_data_base",
-                  label = "Seleccione base de datos:",
-                  choices = names(Bases_de_Datos)
-                  )
-                 ), 
-          column(6, 
-                 p(
-                   class = 'text-right', 
-                   br(), 
-                   downloadButton("Download_data", "Descargar")
-                   )
-                 )
-        ),
+        selectInput(
+          inputId = "select_data_base",
+          label = "Seleccione base de datos:",
+          choices = names(Bases_de_Datos)
+          ),
         h3("Descripción:"), 
         htmlOutput("Descripcion_datos"),
         h3("Datos:"),

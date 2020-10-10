@@ -65,13 +65,6 @@ Bases_de_Datos <-
     "Situacion epidemiologica" = Situacion_epidemiologica
     )
 
-Nombres_de_Datos <- 
-  list(
-    "Atención primaria" = "situacion-enfermos-por-coronavirus-detectados-en-atencion-primaria-por-tramos-d0.csv", 
-    "Hospitales" = "situacion-de-hospitalizados-por-coronavirus-en-castilla-y-leon.csv", 
-    "Situacion epidemiologica" = "situacion-epidemiologica-coronavirus-en-castilla-y-leon.csv"
-  )
-
 Descripcion_de_Datos <- 
   list(
     "Atención primaria" = list(

@@ -269,17 +269,6 @@ shinyServer(function(input, output, session) {
     rownames = FALSE
   )
 
-  output$Download_data <- downloadHandler(
-      filename = function() {Nombres_de_Datos[[input$select_data_base]]},
-      content = function(file){
-        write.csv(
-          Bases_de_Datos[[input$select_data_base]],
-          file,
-          row.names = FALSE
-          )
-      }
-    )
-
   ##### >> Mapa ######################################################################################
   
   output$map_hospitales <- renderLeaflet({
