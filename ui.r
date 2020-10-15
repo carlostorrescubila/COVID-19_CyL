@@ -109,7 +109,7 @@ body <- dashboardBody(
         h3("Descripción:"), 
         htmlOutput("Descripcion_datos"),
         h3("Datos:"),
-        column(12, dataTableOutput("Datos"))
+        dataTableOutput("Datos")
       )
     ),
     
