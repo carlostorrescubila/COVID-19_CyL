@@ -1,13 +1,3 @@
-##### > libraries ####################################################################################
-
-source("./Code/libraries.r", encoding = "UTF-8")
-
-##### > Read data ####################################################################################
-
-source("./Code/read_data.r", encoding = "UTF-8")
-
-##### > Server #######################################################################################
-
 shinyServer(function(input, output, session) {
   
   showModal(
@@ -61,7 +51,7 @@ shinyServer(function(input, output, session) {
     expr = shinyjs::addCssClass(selector = "body", class = "sidebar-collapse")
     )
   
-  ##### >> Right menu ###############################################################################
+  ##### > Right menu ###############################################################################
   
   icon_github <- icon("github")
   icon_github[["attribs"]][["class"]] <- "fa fa-github"
@@ -103,7 +93,7 @@ shinyServer(function(input, output, session) {
   #   expr = shinyjs::hide(id = "messageMenu")#shinyjs::addCssClass(id = "messageMenu", class = "collapse")
   # )
  
-  ##### >> Actualidad ###############################################################################
+  ##### > Actualidad ###############################################################################
   
   output$actualidad_casos_confirmados <- renderValueBox({
     
@@ -219,7 +209,7 @@ shinyServer(function(input, output, session) {
     
   })
 
-  ##### >> Bases de datos#############################################################################
+  ##### > Bases de datos#############################################################################
   
   output$Descripcion_datos <- renderText({
     
@@ -269,7 +259,7 @@ shinyServer(function(input, output, session) {
     rownames = FALSE
   )
 
-  ##### >> Mapa ######################################################################################
+  ##### > Mapa ######################################################################################
   
   output$map_hospitales <- renderLeaflet({
     
@@ -330,7 +320,6 @@ shinyServer(function(input, output, session) {
         label = map_hospital_legend, 
         fillOpacity = 0.5, 
         color= NA,
-        # color = color_circles,
         fillColor = color_circles
       )
     
@@ -400,9 +389,9 @@ shinyServer(function(input, output, session) {
     
   })
 
-  ##### >> Análisis ##################################################################################
+  ##### > Análisis ##################################################################################
 
-  ##### >>> Atención primaria ########################################################################
+  ##### >> Atención primaria ########################################################################
 
   output$analysis_atención_primaria_plot <- renderPlotly({
     
@@ -458,7 +447,7 @@ shinyServer(function(input, output, session) {
     
   })
   
-  ##### >>> Hospitales ###############################################################################
+  ##### >> Hospitales ###############################################################################
   
   observe({
     
@@ -505,7 +494,7 @@ shinyServer(function(input, output, session) {
     
   })
 
-  ##### >>> Situación epidemiológica #################################################################
+  ##### >> Situación epidemiológica #################################################################
 
   output$Line_plot <- renderPlotly({
     

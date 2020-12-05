@@ -113,12 +113,13 @@ latitudes_hospitales <- c(
   "Complejo Asistencial Universitario de León" = 42.619435,
   "Complejo Asistencial Universitario de Palencia" = 41.996713,
   "Complejo Asistencial Universitario de Salamanca" = 40.964091,
+  "Edificio Rondilla" = 41.658930,
   "Hospital Clínico Universitario de Valladolid" = 41.655687,
   "Hospital de Medina del Campo" = 41.295328,
   "Hospital El Bierzo" = 42.572222,
   "Hospital Santiago Apóstol" = 42.669824,
   "Hospital Santos Reyes" = 41.669570,
-  "Hospital Universitario Río Hortega" = 41.629669 
+  "Hospital Universitario Río Hortega" = 41.629669
   )
 
 longitudes_hospitales <- c(
@@ -130,6 +131,7 @@ longitudes_hospitales <- c(
   "Complejo Asistencial Universitario de León" = -5.573359,
   "Complejo Asistencial Universitario de Palencia" = -4.519746,
   "Complejo Asistencial Universitario de Salamanca" = -5.673282,
+  "Edificio Rondilla" = -4.726638, 
   "Hospital Clínico Universitario de Valladolid" = -4.719677,
   "Hospital de Medina del Campo" = -4.911416,
   "Hospital El Bierzo" = -6.643453,
