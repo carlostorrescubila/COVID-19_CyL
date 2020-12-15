@@ -10,6 +10,7 @@ shinyServer(function(input, output, session) {
           de la crisis del coronavirus en Castilla y León. Para más información de esta aplicación vea ", 
           tags$a(
             href = "https://github.com/carlostorrescubila/COVID-19_CyL/blob/master/README.md", 
+            target = "_blank",
             "esta documentación"
             ),
           ".",
@@ -53,9 +54,6 @@ shinyServer(function(input, output, session) {
   
   ##### > Right menu ###############################################################################
   
-  icon_github <- icon("github")
-  icon_github[["attribs"]][["class"]] <- "fa fa-github"
-  
   output$messageMenu <- renderMenu({
     
     dropdownMenu(
@@ -64,7 +62,7 @@ shinyServer(function(input, output, session) {
       messageItem(
         from = "Repositorio en GitHub",
         message = "Documentación, código, referencias",
-        icon = icon_github,
+        icon = icon(name = "github", class = "fa"),
         href = "https://github.com/carlostorrescubila/COVID-19_CyL"
       ),
       messageItem(
@@ -244,7 +242,7 @@ shinyServer(function(input, output, session) {
       "Para información más detallada sobre este conjunto de datos visite: ", 
       "<a href='", 
       Descripcion_de_Datos[[as.character(input$select_data_base)]][["link"]], 
-      "', style = 'color:red'>",
+      "', target = '_blank', style = 'color:red'>",
       Descripcion_de_Datos[[as.character(input$select_data_base)]][["link"]],
       "</a>"
       

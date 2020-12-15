@@ -42,11 +42,19 @@ sidebar <- dashboardSidebar(
 ##### > Body #################################################################################
 
 body <- dashboardBody(
-  tags$meta(name = "viewport", content = "width=device-width, initial-scale=1.0"),
-  useShinyjs(),
+  
+  #### >> Metadata (head) ####################################################################
+  
   tags$head(
+    tags$meta(charset = "UTF-8"), 
+    tags$meta(name = "viewport", content = "width=device-width, initial-scale=1.0"),
+    tags$meta(name = "description", content = "Evolución del COVID-19 en Castilla y León, España"), 
+    tags$meta(name = "keywords", content = "Coronavirus, COVID-19, España"),
     tags$style(".selectize-dropdown {position: static}")
   ),
+  
+  useShinyjs(),
+  
   tabItems(
     
     ##### >> Actualidad ######################################################################
@@ -56,7 +64,7 @@ body <- dashboardBody(
       fluidPage(
         h1("Situación actual del COVID-19 en Castilla y León", class = "text-center"), 
         h2(
-          paste("hasta el ", Situacion_epidemiologica$fecha %>% unique %>% last), 
+          paste("hasta el ", Situacion_epidemiologica$fecha %>% unique %>% last %>% format("%d de %B de %Y")), 
           class = "text-center"
           ), 
         br(),
@@ -80,6 +88,7 @@ body <- dashboardBody(
           "Los conjuntos de datos disponibles han sido obtenidos del ",
           tags$a(
             href="https://datosabiertos.jcyl.es/web/es/catalogo-datos.html",
+            target = "_blank",
             "Portal de Datos Abiertos de la Junta de Castilla y León", 
             style = "color:red"
             ),
