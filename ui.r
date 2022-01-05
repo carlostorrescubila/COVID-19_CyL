@@ -300,8 +300,7 @@ ui <- div(
     skin = "red",
     header,
     sidebar,
-    body,
-    useShinyalert()
-  )
+    body
+    )
 )
 
