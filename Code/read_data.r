@@ -2,11 +2,12 @@
 
 Atencion_primaria <- 
   read_delim(
-    file = "Data/situacion-enfermos-por-coronavirus-detectados-en-atencion-primaria-por-tramos-d0.csv", 
-    delim = ";", 
-    escape_double = FALSE, 
-    trim_ws = TRUE
-  ) %>% 
+    file = "Data/situacion-enfermos-por-coronavirus-detectados-en-atencion-primaria-por-tramos-d0.csv",
+    delim = ";",
+    escape_double = FALSE,
+    trim_ws = TRUE,
+    show_col_types = FALSE
+  ) %>%
   as.data.frame()%>% 
   mutate(
     fecha = as.Date(.$fecha),
