@@ -295,7 +295,7 @@ body <- dashboardBody(
 ##### UI ####################################################################################
 
 ui <- div(
-  dashboardPagePlus(
+  dashboardPage(
     title = "COVID-19 CyL",
     skin = "red",
     header,
