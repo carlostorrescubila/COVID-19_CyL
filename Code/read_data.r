@@ -102,7 +102,7 @@ Descripcion_de_Datos <-
 
 Map_CyL <- 
   # getData("GADM", country = "ES", level = 2) %>% 
-  readRDS("Data/gadm36_ESP_2_sp.rds") %>% 
+  readRDS("./Data/gadm36_ESP_2_sp.rds") %>% 
   subset(NAME_1 == "Castilla y León")
 
 latitudes_hospitales <- c(
