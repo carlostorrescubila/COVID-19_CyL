@@ -6,7 +6,6 @@ Atencion_primaria <-
     delim = ";",
     escape_double = FALSE,
     trim_ws = TRUE,
-    show_col_types = FALSE
   ) %>%
   as.data.frame()%>% 
   mutate(
