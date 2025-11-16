@@ -1,13 +1,10 @@
 ##### Situación enfermos por coronavirus detectados en atencion primaria por tramos #######################
 
-Atencion_primaria <- 
-  read_delim(
-    file = "Data/situacion-enfermos-por-coronavirus-detectados-en-atencion-primaria-por-tramos-d0.csv",
-    delim = ";",
-    escape_double = FALSE,
-    trim_ws = TRUE,
-  ) %>%
-  as.data.frame()%>% 
+Atencion_primaria2 <- 
+  read.csv(
+    "https://analisis.datosabiertos.jcyl.es/explore/dataset/situacion-enfermos-por-coronavirus-detectados-en-atencion-primaria-por-tramos-d0/download?format=csv&timezone=Europe%2FBerlin&use_labels_for_header=true",
+    sep = ";"
+  ) %>% 
   mutate(
     fecha = as.Date(.$fecha),
     provincia = as.factor(.$provincia),
